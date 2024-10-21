@@ -2,6 +2,7 @@ package com.ra.session03.service.category;
 
 import com.ra.session03.model.dto.category.CategoryRequestDTO;
 import com.ra.session03.model.dto.category.CategoryResponseDTO;
+import com.ra.session03.model.dto.category.CategoryUpdateRequestDTO;
 import com.ra.session03.model.entity.Category;
 import com.ra.session03.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,22 @@ public class CategoryServiceImpl implements CategoryService{
                 .id(category.getId())
                 .categoryName(category.getCategoryName())
                 .categoryStatus(category.getCategoryStatus())
+                .build();
+    }
+
+    @Override
+    public CategoryResponseDTO create(CategoryUpdateRequestDTO categoryRequestDTO) {
+        Category category = Category.builder()
+                .id(categoryRequestDTO.getId())
+                .categoryName(categoryRequestDTO.getCategoryName())
+                .categoryStatus(categoryRequestDTO.getCategoryStatus())
+                .build();
+        Category categoryNew = categoryRepository.save(category);
+
+        return CategoryResponseDTO.builder()
+                .id(categoryNew.getId())
+                .categoryName(categoryNew.getCategoryName())
+                .categoryStatus(categoryNew.getCategoryStatus())
                 .build();
     }
 

@@ -9,8 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CategoryRequestDTO {
-
+public class CategoryUpdateRequestDTO {
+    private Long id;
     private String categoryName;
     private Boolean categoryStatus;
 }
