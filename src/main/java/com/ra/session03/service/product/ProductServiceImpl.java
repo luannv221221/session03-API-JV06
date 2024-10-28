@@ -43,4 +43,17 @@ public class ProductServiceImpl implements ProductService {
         }
         return responseDTOS;
     }
+
+    @Override
+    public List<ProductResponseDTO> searchByProductName(String keyword) {
+        List<Product> products = productRepository.searchByName(keyword);
+        return products.stream().map(product -> {
+            ProductResponseDTO responseDTO = new ProductResponseDTO();
+            responseDTO.setId(product.getId());
+            responseDTO.setProductName(product.getProductName());
+            responseDTO.setImage(product.getImage());
+            responseDTO.setPrice(product.getPrice());
+            return responseDTO;
+        }).toList();
+    }
 }
