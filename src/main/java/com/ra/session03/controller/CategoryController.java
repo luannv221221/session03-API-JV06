@@ -7,6 +7,7 @@ import com.ra.session03.service.category.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +32,17 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<?> index(
             @RequestParam(defaultValue = "0",name = "page") int page,
-            @RequestParam(defaultValue = "3",name = "limit") int limit
+            @RequestParam(defaultValue = "3",name = "limit") int limit,
+            @RequestParam(defaultValue = "ASC",name = "order") String sort,
+            @RequestParam(defaultValue = "id",name = "sortBy") String sortBy
             ){
-        Pageable pageable = PageRequest.of(page,limit);
+        Pageable pageable;
+        if(sort.equalsIgnoreCase("ASC")){
+            pageable = PageRequest.of(page,limit, Sort.by(sortBy).ascending());
+        } else {
+            pageable = PageRequest.of(page,limit, Sort.by(sortBy).descending());
+        }
+
         Page<CategoryResponseDTO> categoryResponseDTOPage = categoryService.paginate(pageable);
         return new ResponseEntity<>(categoryResponseDTOPage,HttpStatus.OK);
     }

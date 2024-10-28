@@ -89,14 +89,14 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public Page<CategoryResponseDTO> paginate(Pageable pageable) {
         Page<Category> categories = categoryRepository.findAll(pageable);
-        Page<CategoryResponseDTO> categoryResponseDTOS =
-                categories.map(category -> {
-                    CategoryResponseDTO responseDTO = new CategoryResponseDTO();
-                    responseDTO.setCategoryName(category.getCategoryName());
-                    responseDTO.setId(category.getId());
-                    responseDTO.setCategoryStatus(category.getCategoryStatus());
-                    return responseDTO;
-                });
+        Page<CategoryResponseDTO> categoryResponseDTOS;
+        categoryResponseDTOS = categories.map(category -> {
+            CategoryResponseDTO responseDTO = new CategoryResponseDTO();
+            responseDTO.setCategoryName(category.getCategoryName());
+            responseDTO.setId(category.getId());
+            responseDTO.setCategoryStatus(category.getCategoryStatus());
+            return responseDTO;
+        });
 
         return categoryResponseDTOS;
     }
